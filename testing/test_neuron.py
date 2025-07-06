@@ -1,9 +1,5 @@
 """Simple tests for the Neuron class."""
 
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import numpy as np
 from src.neuron import Neuron
 
