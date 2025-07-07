@@ -46,7 +46,7 @@ def test_layer_dense_reproducible():
     layer2.forward(inputs)
     output2 = layer2.output
     
-    # Results should be identical with same seed
+    # Results should be identical with the same seed
     np.testing.assert_array_almost_equal(output1, output2)
 
 def test_layer_textbook_example():
@@ -70,7 +70,7 @@ def test_layer_textbook_example():
     
     # Test with our layer (using same initialization)
     layer = Layer_Dense(3, 3)
-    layer.weights = weights.T  # Transpose to match our implementation
+    layer.weights = weights.T  # Transpose to match implementation
     layer.biases = biases.reshape(1, -1)
     
     layer.forward(inputs.reshape(1, -1))  # Reshape to 2D
