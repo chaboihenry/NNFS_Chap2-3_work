@@ -19,9 +19,6 @@ def main():
     # Load and preprocess data
     df = pd.read_csv('Datasets/me_cfs_vs_depression_dataset.csv')
     
-    # Only keep Depression and ME/CFS
-    df = df[df['diagnosis'].isin(['Depression', 'ME/CFS'])]
-    
     # Fill missing numeric values
     for col in df.select_dtypes(include=[np.number]).columns:
         df[col] = df[col].fillna(df[col].median())
@@ -37,9 +34,12 @@ def main():
     df['social_activity_level'] = df['social_activity_level'].replace(social_mapping).fillna(2)
     df['exercise_frequency'] = df['exercise_frequency'].replace(exercise_mapping).fillna(2)
     
-    # Prepare features and labels
+    # Prepare features and labels - keep all 3 classes
     X = df.drop(['diagnosis', 'age'], axis=1).to_numpy()
-    y = (df['diagnosis'] == 'Depression').astype(int).to_numpy()
+    
+    # Encode labels: 0=ME/CFS, 1=Depression, 2=Both
+    diagnosis_mapping = {'ME/CFS': 0, 'Depression': 1, 'Both': 2}
+    y = df['diagnosis'].replace(diagnosis_mapping).to_numpy()
     
     # Normalize features
     X = (X - X.mean(axis=0)) / X.std(axis=0)
@@ -51,7 +51,7 @@ def main():
     activation1 = Activation_ReLU()
     dense2 = Layer_Dense(16, 16)
     activation2 = Activation_ReLU()
-    dense3 = Layer_Dense(16, 2)
+    dense3 = Layer_Dense(16, 3)  # 3 classes: ME/CFS, Depression, Both
     activation3 = Activation_Softmax()
     loss_function = Loss_CategoricalCrossentropy()
 
