@@ -5,9 +5,8 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import numpy as np
-from layer.layer_dense import Layer_Dense
-from layer.layer import Layer
-from neuron.neuron import Neuron
+from layer import Layer_Dense, Layer
+from neuron import Neuron
 
 def test_layer_dense_initialization():
     """Test that Layer_Dense initializes correctly."""
