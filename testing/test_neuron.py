@@ -5,7 +5,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import numpy as np
-from neuron.neuron import Neuron
+from neuron import Neuron
 
 def test_neuron_initialization():
     """Test that Neuron initializes correctly."""
