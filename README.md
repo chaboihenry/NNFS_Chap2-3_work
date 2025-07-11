@@ -166,16 +166,6 @@ print(f"Accuracy: {accuracy}")  # ~0.333 (random guessing)
 ├── explore_vertical_data.py  # Data exploration script
 └── README.md              # This file
 ```
-
-## Key Insights
-
-1. **Start Simple**: Single neurons → layers → activation functions → loss functions
-2. **Test Everything**: I wrote tests for each component to make sure they work correctly
-3. **Modular Design**: Each component is in its own file, making it easy to understand and modify
-4. **Textbook Accuracy**: My implementations produce the exact same outputs as the textbook examples
-5. **Foundation Matters**: Understanding these basics makes everything else much clearer
-6. **Real-World Applications**: Applied the neural network to actual datasets for personality and medical classification
-
 ## Running the Code
 
 ```bash
