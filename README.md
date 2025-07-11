@@ -80,6 +80,34 @@ Now I learned how to measure how wrong my network's predictions are. This is cru
 - We need this to train the network (reduce loss = improve predictions)
 - Categorical crossentropy is perfect for classification problems
 
+## Classification Scripts
+
+I've created several main scripts that demonstrate the neural network on different classification tasks:
+
+### 1. `main_spiral.py` - Textbook Example
+- Uses the spiral dataset from NNFS
+- Demonstrates the complete network from Chapters 1-5
+- Shows single neuron, layer operations, and full network
+
+### 2. `main_vertical.py` - Simple Classification
+- Uses vertical data from NNFS
+- 2-class classification problem
+- Simple and clean implementation
+
+### 3. `main_behaviour.py` - Personality Classification
+- **Dataset**: `Datasets/personality_datasert.csv`
+- **Task**: Classify introvert vs extrovert based on personality traits
+- **Features**: 7 features (time spent alone, social events, etc.)
+- **Architecture**: 3-layer network (7 → 16 → 16 → 2)
+- **Results**: ~59% accuracy
+
+### 4. `main_depression.py` - Medical Classification
+- **Dataset**: `Datasets/me_cfs_vs_depression_dataset.csv`
+- **Task**: 3-class classification (Depression, ME/CFS, Both)
+- **Features**: 14 features (sleep quality, brain fog, pain scores, etc.)
+- **Architecture**: 3-layer network (14 → 16 → 16 → 3)
+- **Results**: ~46% accuracy (reasonable for 3-class problem)
+
 ## Complete Network Example
 
 By Chapter 5, I can build a complete neural network:
@@ -122,13 +150,20 @@ print(f"Accuracy: {accuracy}")  # ~0.333 (random guessing)
 ├── losses/
 │   ├── losses.py          # Loss function implementations
 │   └── __init__.py
+├── main_scripts/
+│   ├── main_spiral.py     # Textbook spiral data example
+│   ├── main_vertical.py   # Simple 2-class classification
+│   ├── main_behaviour.py  # Personality classification (introvert/extrovert)
+│   └── main_depression.py # Medical classification (Depression/ME/CFS/Both)
+├── Datasets/
+│   ├── personality_datasert.csv           # Personality traits dataset
+│   └── me_cfs_vs_depression_dataset.csv   # Medical diagnosis dataset
 ├── tests/
 │   ├── test_neuron.py     # Neuron tests
 │   ├── test_layers.py     # Layer tests
 │   ├── test_activation_functions.py  # Activation function tests
 │   └── test_losses.py     # Loss function tests
-├── main1.py               # Complete example (Chapters 1-5) with spiral_data
-├── main2.py               # Future: External dataset example
+├── explore_vertical_data.py  # Data exploration script
 └── README.md              # This file
 ```
 
@@ -136,19 +171,39 @@ print(f"Accuracy: {accuracy}")  # ~0.333 (random guessing)
 
 1. **Start Simple**: Single neurons → layers → activation functions → loss functions
 2. **Test Everything**: I wrote tests for each component to make sure they work correctly
-3. **Modular Design**: Each component is in its file, making it easy to understand and modify
-4. **Textbook Accuracy**: My implementations produce the same outputs as the textbook examples
+3. **Modular Design**: Each component is in its own file, making it easy to understand and modify
+4. **Textbook Accuracy**: My implementations produce the exact same outputs as the textbook examples
 5. **Foundation Matters**: Understanding these basics makes everything else much clearer
+6. **Real-World Applications**: Applied the neural network to actual datasets for personality and medical classification
 
 ## Running the Code
 
 ```bash
 # Install dependencies
-pip install numpy matplotlib nnfs pytest
+pip install numpy matplotlib nnfs pytest pandas
 
-# Run the complete example
-python main1.py
+# Run textbook examples
+python main_scripts/main_spiral.py
+python main_scripts/main_vertical.py
+
+# Run real-world classification tasks
+python main_scripts/main_behaviour.py
+python main_scripts/main_depression.py
 
 # Run all tests
 python -m pytest tests/ -v
 ```
+
+## Dataset Information
+
+### Personality Dataset
+- **Purpose**: Classify introvert vs extrovert personality types
+- **Features**: 7 features including time spent alone, social event attendance, stage fear, etc.
+- **Samples**: ~2,900 individuals
+- **Classes**: 2 (Introvert, Extrovert)
+
+### Medical Dataset  
+- **Purpose**: Classify between Depression, ME/CFS, and Both conditions
+- **Features**: 14 features including sleep quality, brain fog, physical pain, stress levels, etc.
+- **Samples**: ~1,000 patients
+- **Classes**: 3 (Depression, ME/CFS, Both)
