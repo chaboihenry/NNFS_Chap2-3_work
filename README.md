@@ -2,7 +2,7 @@
 
 This repository contains my implementation of neural networks following the "Neural Networks from Scratch" textbook by Harrison Kinsley and Daniel Kukieła. I've built everything from the ground up, learning the fundamentals of how neural networks actually work.
 
-## What I've Learned (Chapters 1-5)
+## What I've Learned (Chapters 1-7)
 
 ### Chapter 1-2: The Building Blocks - Neurons
 
@@ -80,14 +80,100 @@ Now I learned how to measure how wrong my network's predictions are. This is cru
 - We need this to train the network (reduce loss = improve predictions)
 - Categorical crossentropy is perfect for classification problems
 
+### Chapter 6: Optimization - Finding Better Weights
+
+This chapter introduced me to the concept of optimization - how to actually improve the network's performance by finding better weights and biases.
+
+**Key Concepts:**
+- **Random Search**: A simple but inefficient optimization method
+- **Weight Adjustment**: Randomly tweaking weights and keeping improvements
+- **Loss Minimization**: The goal is to find weights that minimize loss
+
+**What I implemented:**
+- Random search optimization in `main_spiral.py`
+- Only keeping weight changes that improve (lower) the loss
+- Tracking the best weights found so far
+- Iterative improvement over many attempts
+
+**Example from the spiral dataset:**
+```python
+# Random search optimization
+for iteration in range(10000):
+    # Randomly adjust weights
+    dense1.weights += 0.05 * np.random.randn(2, 3)
+    dense1.biases += 0.05 * np.random.randn(1, 3)
+    
+    # Test new weights
+    # ... forward pass ...
+    
+    # Keep if better, otherwise revert
+    if loss < lowest_loss:
+        print(f'New set of weights found, iteration: {iteration} loss: {loss:.7f} acc: {accuracy}')
+        # Save best weights
+        lowest_loss = loss
+    else:
+        # Revert to previous best weights
+        dense1.weights = best_weights.copy()
+```
+
+**Results:**
+- Started with loss ~1.098 and accuracy ~33%
+- After 10,000 iterations: loss ~1.028 and accuracy ~44%
+- Shows that even random search can improve performance
+
+**Why this matters:**
+- This is the foundation of training neural networks
+- Real training uses smarter methods (gradient descent), but the principle is the same
+- Demonstrates that neural networks can learn by finding better weights
+
+### Chapter 7: Derivatives - The Math Behind Optimization
+
+Chapter 7 focused on the mathematical foundation needed for proper optimization: derivatives and calculus.
+
+**Key Concepts:**
+- **Derivatives**: How much a function changes when its input changes
+- **Chain Rule**: How to find derivatives of composite functions
+- **Gradients**: The direction of steepest increase in multi-variable functions
+
+**What I learned:**
+- How to calculate derivatives of simple functions
+- The relationship between derivatives and optimization
+- Why derivatives are crucial for efficient training (gradient descent)
+
+**Simple derivative example:**
+```python
+# For function f(x) = 2x²
+def f(x):
+    return 2 * x**2
+
+# Derivative is f'(x) = 4x
+def derivative_f(x):
+    return 4 * x
+
+# At x = 3: f'(3) = 12
+# This tells us the function is increasing rapidly at x = 3
+```
+
+**Why derivatives matter:**
+- They tell us which direction to adjust weights for maximum improvement
+- This leads to gradient descent (much better than random search)
+- Foundation for backpropagation (coming in later chapters)
+- Makes training thousands of times more efficient
+
+**Connection to neural networks:**
+- Instead of random weight changes, we can calculate exactly how to change weights
+- Derivatives show us the "slope" of the loss function
+- We can follow the slope downhill to minimize loss faster
+
 ## Classification Scripts
 
 I've created several main scripts that demonstrate the neural network on different classification tasks:
 
 ### 1. `main_spiral.py` - Textbook Example
 - Uses the spiral dataset from NNFS
-- Demonstrates the complete network from Chapters 1-5
-- Shows single neuron, layer operations, and full network
+- Demonstrates the complete network from Chapters 1-6
+- Shows single neuron, layer operations, full network, and optimization
+- Includes random search optimization that improves accuracy from ~33% to ~44%
 
 ### 2. `main_vertical.py` - Simple Classification
 - Uses vertical data from NNFS
@@ -110,7 +196,7 @@ I've created several main scripts that demonstrate the neural network on differe
 
 ## Complete Network Example
 
-By Chapter 5, I can build a complete neural network:
+By Chapter 6, I can build a complete neural network with optimization:
 
 ```python
 # Create network
@@ -132,6 +218,10 @@ accuracy = np.mean(np.argmax(activation2.output, axis=1) == y)
 
 print(f"Loss: {loss}")      # ~1.098
 print(f"Accuracy: {accuracy}")  # ~0.333 (random guessing)
+
+# With optimization (Chapter 6)
+# After 10,000 iterations of random search:
+# Loss: ~1.028, Accuracy: ~0.44
 ```
 
 ## Project Structure
@@ -166,6 +256,7 @@ print(f"Accuracy: {accuracy}")  # ~0.333 (random guessing)
 ├── explore_vertical_data.py  # Data exploration script
 └── README.md              # This file
 ```
+
 ## Running the Code
 
 ```bash
