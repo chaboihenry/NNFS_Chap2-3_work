@@ -126,7 +126,7 @@ for iteration in range(10000):
 - Real training uses smarter methods (gradient descent), but the principle is the same
 - Demonstrates that neural networks can learn by finding better weights
 
-### Chapter 7: Derivatives - The Math Behind Optimization
+### Chapter 7 & 8: Derivatives & Gradients - The Math Behind Optimization
 
 Chapter 7 focused on the mathematical foundation needed for proper optimization: derivatives and calculus.
 
@@ -165,9 +165,9 @@ def derivative_f(x):
 - Derivatives show us the "slope" of the loss function
 - We can follow the slope downhill to minimize loss faster
 
-### Chapter 7.5: Backward Passes - Implementing Derivatives
+### Chapter 9: Backpropagation - Backward Passes / Implementing Derivatives
 
-Building on Chapter 7's derivative concepts, I've implemented the backward passes for all activation functions and layers. This is the foundation for backpropagation and gradient descent.
+Building on Chapter 7 & 8's derivative concepts, I've implemented the backward passes for all activation functions and layers. This is the foundation for backpropagation and gradient descent.
 
 **Key Implementations:**
 
