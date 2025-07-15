@@ -128,7 +128,7 @@ for iteration in range(10000):
 
 ### Chapter 7 & 8: Derivatives & Gradients - The Math Behind Optimization
 
-Chapter 7 focused on the mathematical foundation needed for proper optimization: derivatives and calculus.
+Chapter 7 & 8 focused on the mathematical foundation needed for proper optimization: derivatives and gradients.
 
 **Key Concepts:**
 - **Derivatives**: How much a function changes when its input changes
@@ -249,32 +249,45 @@ I've created several main scripts that demonstrate the neural network on differe
 
 ## Complete Network Example
 
-By Chapter 6, I can build a complete neural network with optimization:
+By Chapter 9, I can build a complete neural network with forward and backward passes:
 
 ```python
 # Create network
 dense1 = Layer_Dense(2, 3)           # 2 inputs, 3 neurons
 activation1 = Activation_ReLU()      # ReLU activation
 dense2 = Layer_Dense(3, 3)           # 3 inputs, 3 neurons  
-activation2 = Activation_Softmax()   # Softmax for probabilities
+loss_activation = Activation_Softmax_Loss_CategoricalCrossentropy()  # Combined softmax + loss
 
 # Forward pass
 dense1.forward(X)
 activation1.forward(dense1.output)
 dense2.forward(activation1.output)
-activation2.forward(dense2.output)
+loss = loss_activation.forward(dense2.output, y)
 
-# Calculate loss and accuracy
-loss_function = Loss_CategoricalCrossentropy()
-loss = loss_function.calculate(activation2.output, y)
-accuracy = np.mean(np.argmax(activation2.output, axis=1) == y)
+# Calculate accuracy
+predictions = np.argmax(loss_activation.output, axis=1)
+if len(y.shape) == 2:
+    y = np.argmax(y, axis=1)
+accuracy = np.mean(predictions == y)
 
 print(f"Loss: {loss}")      # ~1.098
 print(f"Accuracy: {accuracy}")  # ~0.333 (random guessing)
 
-# With optimization (Chapter 6)
-# After 10,000 iterations of random search:
-# Loss: ~1.028, Accuracy: ~0.44
+# Backward pass (new in Chapter 9)
+loss_activation.backward(loss_activation.output, y)
+dense2.backward(loss_activation.dinputs)
+activation1.backward(dense2.dinputs)
+dense1.backward(activation1.dinputs)
+
+# Now we have gradients for all parameters
+print(f"Dense1 weight gradients shape: {dense1.dweights.shape}")
+print(f"Dense1 bias gradients shape: {dense1.dbiases.shape}")
+print(f"Dense2 weight gradients shape: {dense2.dweights.shape}")
+print(f"Dense2 bias gradients shape: {dense2.dbiases.shape}")
+
+# Next steps: Use these gradients with an optimizer to update weights
+# This builds the foundation for gradient descent optimization
+# (Coming in future chapters)
 ```
 
 ## Project Structure
