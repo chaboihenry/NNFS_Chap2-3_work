@@ -491,7 +491,7 @@ I've created several main scripts that demonstrate the neural network on differe
 │   ├── main_behaviour.py  # Personality classification (introvert/extrovert)
 │   ├── main_depression.py # Medical classification (Depression/ME/CFS/Both)
 │   └── demo_backward_passes.py  # Backward pass demonstrations
-├── datasets/              # UPDATED: Renamed from Datasets/
+├── datasets/             
 │   ├── personality_dataset.csv           # Personality traits dataset
 │   └── me_cfs_vs_depression_dataset.csv # Medical diagnosis dataset
 ├── tests/
